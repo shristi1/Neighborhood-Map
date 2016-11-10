@@ -4,10 +4,12 @@ A single-page application featuring a Google Map of my neighborhood with map mar
 
 ## How Do I Use This?
 To run this program locally on your computer:
+
+
 	1. Type the path to where index.html is located on your computer in the url of a browser.
 	
 	OR
-
+	
 	2. Find index.html on your computer and right click on it. Then click open in browser 	from the dropdown menu that appears. This will open the application in your default browser.
 
 
