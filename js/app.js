@@ -79,10 +79,11 @@ var Location = function(data) {
 	$.ajax({url: wikiQuery,
 		dataType:'jsonp',
 		success: function(data) {
+			self.infoWindow.setContent("Still Loading!");
 			// add the wikiSnippet data
 			self.wikiSnippet = data[2];
 			if(typeof data[2] == 'undefined'){
-				self.wikiSnippet = "";
+				self.wikiSnippet = "No Wikipedia articles available.";
 			}
 			clearTimeout(wikiRequestTimeout);
 		}
