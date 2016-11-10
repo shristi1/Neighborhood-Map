@@ -123,7 +123,7 @@ var Location = function(data) {
         '<div class="content">' + self.wikiSnippet + "</div>";
        
         self.infoWindow.setContent(self.contentString);
-        active(false);
+        active(true);
 		self.infoWindow.open(map, this);
 
 		self.marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -149,7 +149,8 @@ function AppViewModel() {
 	// New map
 	map = new google.maps.Map(document.getElementById('map'), {
 			zoom: 12,
-			center: {lat: 41.008198, lng: -91.969479}
+			center: {lat: 41.008198, lng: -91.969479},
+			mapTypeControl: false
 	});
 
 	// Add location
