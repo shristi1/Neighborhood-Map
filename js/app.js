@@ -55,6 +55,8 @@ var locations = [
 
 // Set global variable(s)
 var map;
+self.active = ko.observable();
+
 
 // View
 var Location = function(data) {
@@ -121,6 +123,7 @@ var Location = function(data) {
         '<div class="content">' + self.wikiSnippet + "</div>";
        
         self.infoWindow.setContent(self.contentString);
+        active(false);
 		self.infoWindow.open(map, this);
 
 		self.marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -172,24 +175,21 @@ function AppViewModel() {
 		}
 	}, self);
 	// Toggle Menu
-		// Declare ko observable
-		self.active = ko.observable();
-
 		if (window.matchMedia('(max-width: 736px)').matches) {
-		  self.active(true); // Write to ko observable
+		  active(true); // Write to ko observable
 		} else {
-		  self.active(false);
+		  active(false);
 		}
 
 		$(window).on('resize', function() {
 		  if (window.matchMedia('(max-width: 736px)').matches) {
-		    self.active(true)
+		    active(true)
 		  } else {
-		    self.active(false);
+		    active(false);
 		  }
 		});
 	    self.toggleActive = function(){
-	        self.active(!self.active()); 
+	        active(!active()); 
 	    }
 
 	this.mapElem = document.getElementById('map');
