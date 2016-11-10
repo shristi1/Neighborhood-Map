@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Fairfield, IA Neighborhood Map</title>
+	<link rel="stylesheet" href="css/styles.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<div class="header">
+		<!-- Hamburger -->
+		<div id="hamburger">
+	        <a href="#" class="menu-icon-link" data-bind="click: toggleActive">
+	            <img src = "img/hamburger.svg" alt="MENU"> 
+	        </a>
+	    </div>
+
+	    <!-- Search Bar -->
+		<div class="search">
+			<input class="search-box" placeholder="Search"data-bind="textInput: searchTerm, valueUpdate: 'afterkeydown'" />
+		</div>
+	</div>
+
+	<aside>
+	 	<div class="search-list" data-bind="css: {'activeStyle': active}">
+			<!-- Filtered List -->
+			<div class="list">
+				<ul class="results" data-bind="foreach: filteredList">
+					<li class="place" data-bind="text: name, click: bounce"></li>
+				</ul>
+			</div>
+		</div>
+	</aside>
+
+	<main>
+		<!-- Map -->
+		<div id="map"></div>
+	</main>
+
+
+	<script src='http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js'></script>
+	<script src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
+	<script src='js/app.js'></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0YDut4HjI10qBaXXepjOrZAWvGf8lNlg&callback=initMap&libraries=places" onerror="errorHandling()"></script>
+</body>
+</html>
