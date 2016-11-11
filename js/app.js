@@ -65,7 +65,7 @@ var Location = function(data) {
 	this.lat = data.lat;
 	this.lng = data.lng;
 	this.URL = data.url;
-	this.wikiSnippet = "";
+	this.wikiSnippet = "Nothing Here!";
 
 	this.visible = ko.observable(true);
 
@@ -77,18 +77,16 @@ var Location = function(data) {
 
 	// Wiki search url
 	var wikiQuery = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + this.name + '&limit=1&format=json&callback=wikiCallback';
-
 	$.ajax({url: wikiQuery,
 		dataType:'jsonp',
 		success: function(data) {
-			self.infoWindow.setContent("Still Loading!");
 			// add the wikiSnippet data
 			self.wikiSnippet = data[2];
-			if(typeof data[2] == 'undefined'){
-				self.wikiSnippet = "No Wikipedia articles available.";
+			if(self.wikiSnippet == ""){
+				self.wikiSnippet = "No Wikipedia Article!";
 			}
 			clearTimeout(wikiRequestTimeout);
-		}
+		},
 	});
 
 
