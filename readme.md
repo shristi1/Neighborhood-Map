@@ -27,3 +27,6 @@ To run this program locally on your computer:
 		
 	Hamburger Icon:
 		www.iconfinder.com/icons/134216/hamburger_lines_menu_icon
+		
+	Recenter Map on Resize:
+		http://stackoverflow.com/questions/8792676/center-google-maps-v3-on-browser-resize-responsive

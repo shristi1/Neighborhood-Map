@@ -65,34 +65,34 @@ var Location = function(data) {
 	this.lat = data.lat;
 	this.lng = data.lng;
 	this.URL = data.url;
-	this.wikiSnippet = "Nothing Here!";
+	this.wikiSnippet = "";
 
 	this.visible = ko.observable(true);
 
-
 	// If the wikiRequest times out, then display a message with a link to the Wikipedia page.
-	var wikiRequestTimeout = setTimeout(function() {
-		self.wikiSnippet = "Unable to access Wikipedia.";
-	}, 1000);
+		var wikiRequestTimeout = setTimeout(function() {
+			self.wikiSnippet = "Unable to access Wikipedia.";
+		}, 1000);
 
-	// Wiki search url
-	var wikiQuery = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + this.name + '&limit=1&format=json&callback=wikiCallback';
-	$.ajax({url: wikiQuery,
-		dataType:'jsonp',
-		success: function(data) {
-			// add the wikiSnippet data
-			self.wikiSnippet = data[2];
-			if(self.wikiSnippet == ""){
-				self.wikiSnippet = "No Wikipedia Article!";
-			}
-			clearTimeout(wikiRequestTimeout);
-		},
-	});
-
+		// Wiki search url
+		var wikiQuery = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + this.name + '&limit=1&format=json&callback=wikiCallback';
+		$.ajax({url: wikiQuery,
+			dataType:'jsonp',
+			success: function(data) {
+				self.infoWindow.setContent("Still Loading! Come back later!");
+				// add the wikiSnippet data
+				self.wikiSnippet = data[2];
+				if(self.wikiSnippet == ""){
+					self.wikiSnippet = "No Wikipedia Article!";
+				}
+				clearTimeout(wikiRequestTimeout);
+			},
+		});
+	
 
 	this.contentString = '<div class="info-window-content"><div class="title"><b>' + data.name + "</b></div>" +
-        '<div class="content"><a href="' + self.URL +'">' + self.URL + "</a></div>"+
-        '<div class="content">' + self.wikiSnippet + "</div>";
+					     '<div class="content"><a href="' + self.URL +'">' + self.URL + "</a></div>"+
+					     '<div class="content">' + self.wikiSnippet + "</div>";
 
     // new infoWindow
 	this.infoWindow = new google.maps.InfoWindow({content: self.contentString});
@@ -116,6 +116,7 @@ var Location = function(data) {
 
 	// show information for a marker when clicked
 	this.marker.addListener('click', function(){
+
 		self.contentString = '<div class="info-window-content"><div class="title"><b>' + data.name + "</b></div>" +
         '<div class="content"><a href="' + self.URL +'">' + self.URL + "</a></div>" +
         '<div class="content">' + self.wikiSnippet + "</div>";
@@ -146,8 +147,8 @@ function AppViewModel() {
 
 	// New map
 	map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 12,
-			center: {lat: 41.008198, lng: -91.969479},
+			zoom: 14,
+			center: {lat: 41.010773, lng: -91.965100},
 			mapTypeControl: false
 	});
 
@@ -175,7 +176,7 @@ function AppViewModel() {
 	}, self);
 	// Toggle Menu
 		if (window.matchMedia('(max-width: 736px)').matches) {
-		  active(true); // Write to ko observable
+		  active(true);
 		} else {
 		  active(false);
 		}
@@ -190,6 +191,12 @@ function AppViewModel() {
 	    self.toggleActive = function(){
 	        active(!active()); 
 	    }
+
+	// Center Map on Resize 
+		var center = map.getCenter();
+		google.maps.event.addDomListener(window, 'resize', function() {
+			map.setCenter(center);
+		});
 
 	this.mapElem = document.getElementById('map');
 	this.mapElem.style.height = window.innerHeight - 50;
